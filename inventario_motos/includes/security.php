@@ -153,3 +153,12 @@ function require_login($login_path = '../auth/login.php')
         redirect($login_path);
     }
 }
+
+/**
+ * Get the currently logged in user
+ * @return string|null User name or null if not logged in
+ */
+function get_logged_in_user()
+{
+    return $_SESSION['usuario'] ?? null;
+}

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $nombre = post_input('nombre');
     
-    if ($nombre) {
+    if (!empty($nombre)) {
         $stmt = $pdo->prepare("UPDATE categorias SET nombre = ? WHERE id = ?");
         $stmt->execute([$nombre, $id]);
         redirect('listar.php');

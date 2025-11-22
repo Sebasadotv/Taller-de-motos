@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $nombre = post_input('nombre');
     
-    if ($nombre) {
+    if (!empty($nombre)) {
         $stmt = $pdo->prepare("INSERT INTO categorias (nombre) VALUES (?)");
         $stmt->execute([$nombre]);
         redirect('listar.php');

@@ -4,7 +4,7 @@ require_once '../config/db.php';
 
 require_login('../auth/login.php');
 
-$usuario = $_SESSION['usuario'];
+$usuario = get_logged_in_user();
 
 // Obtener estadísticas.
 $stmt_prod = $pdo->query("SELECT COUNT(*) FROM productos");
