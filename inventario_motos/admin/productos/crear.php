@@ -4,23 +4,29 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
-require_once '../../config/db.php';
 
-// Obtener categorías para el select
+require_once '../../config/db.php';
+require_once '../../includes/security.php';
+
+// Obtener categorías para el select.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $cilindrada = $_POST['cilindrada'];
-    $color = $_POST['color'];
-    $precio = $_POST['precio'];
-    $stock = $_POST['stock'];
-    $categoria_id = $_POST['categoria_id'];
-    $imagen = $_POST['imagen'] ?? '';
+    // Verify CSRF token.
+    verify_csrf_or_redirect('crear.php');
     
-    $stmt = $pdo->prepare("INSERT INTO productos (nombre, cilindrada, color, precio, stock, categoria_id, imagen) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $nombre = post_input('nombre');
+    $cilindrada = post_input('cilindrada');
+    $color = post_input('color');
+    $precio = post_input('precio', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $stock = post_input('stock', FILTER_SANITIZE_NUMBER_INT);
+    $categoria_id = validate_id(post_input('categoria_id', FILTER_SANITIZE_NUMBER_INT));
+    $imagen = post_input('imagen', FILTER_SANITIZE_URL, '');
+
+    $stmt = $pdo->prepare(
+        "INSERT INTO productos (nombre, cilindrada, color, precio, stock, categoria_id, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    );
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen]);
     
     header('Location: listar.php');
@@ -48,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container">
             <h2>Nueva Moto</h2>
             <form method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nombre de la Moto:</label>
@@ -78,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label>Categoría:</label>
                         <select name="categoria_id" required>
                             <option value="">Seleccione una categoría</option>
-                            <?php foreach ($categorias as $categoria): ?>
+                            <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?php echo $categoria['id']; ?>">
                                     <?php echo htmlspecialchars($categoria['nombre']); ?>
                                 </option>
@@ -99,6 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

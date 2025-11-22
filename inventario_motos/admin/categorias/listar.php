@@ -4,7 +4,9 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
+require_once '../../includes/security.php';
 
 $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -43,13 +45,13 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($categorias as $categoria): ?>
+                        <?php foreach ($categorias as $categoria) : ?>
                             <tr>
                                 <td><?php echo $categoria['id']; ?></td>
                                 <td><?php echo htmlspecialchars($categoria['nombre']); ?></td>
                                 <td>
                                     <a href="editar.php?id=<?php echo $categoria['id']; ?>" class="btn btn-warning">Editar</a>
-                                    <a href="eliminar.php?id=<?php echo $categoria['id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</a>
+                                    <a href="eliminar.php?id=<?php echo $categoria['id']; ?>&<?php echo csrf_param(); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -58,6 +60,6 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

@@ -15,6 +15,6 @@
             <a href="auth/login.php" class="btn btn-success">Iniciar Sesión</a>
         </div>
     </div>
-    <?php include 'includes/footer.php'; ?>
+    <?php require 'includes/footer.php'; ?>
 </body>
 </html>

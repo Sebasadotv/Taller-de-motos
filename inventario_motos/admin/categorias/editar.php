@@ -4,9 +4,11 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
-require_once '../../config/db.php';
 
-$id = $_GET['id'] ?? null;
+require_once '../../config/db.php';
+require_once '../../includes/security.php';
+
+$id = validate_id(get_input('id'));
 
 if (!$id) {
     header('Location: listar.php');
@@ -14,8 +16,10 @@ if (!$id) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
+    // Verify CSRF token.
+    verify_csrf_or_redirect('listar.php');
     
+    $nombre = post_input('nombre');
     $stmt = $pdo->prepare("UPDATE categorias SET nombre = ? WHERE id = ?");
     $stmt->execute([$nombre, $id]);
     
@@ -53,6 +57,7 @@ if (!$categoria) {
         <div class="form-container">
             <h2>Editar Categoría</h2>
             <form method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nombre de la Categoría:</label>
@@ -66,6 +71,6 @@ if (!$categoria) {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

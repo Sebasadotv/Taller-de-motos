@@ -4,28 +4,32 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
-require_once '../../config/db.php';
 
-$id = $_GET['id'] ?? null;
+require_once '../../config/db.php';
+require_once '../../includes/security.php';
+
+$id = validate_id(get_input('id'));
 
 if (!$id) {
     header('Location: listar.php');
     exit();
 }
 
-// Obtener categorías para el select
+// Obtener categorías para el select.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $cilindrada = $_POST['cilindrada'];
-    $color = $_POST['color'];
-    $precio = $_POST['precio'];
-    $stock = $_POST['stock'];
-    $categoria_id = $_POST['categoria_id'];
-    $imagen = $_POST['imagen'] ?? '';
+    // Verify CSRF token.
+    verify_csrf_or_redirect('listar.php');
     
+    $nombre = post_input('nombre');
+    $cilindrada = post_input('cilindrada');
+    $color = post_input('color');
+    $precio = post_input('precio', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $stock = post_input('stock', FILTER_SANITIZE_NUMBER_INT);
+    $categoria_id = validate_id(post_input('categoria_id', FILTER_SANITIZE_NUMBER_INT));
+    $imagen = post_input('imagen', FILTER_SANITIZE_URL, '');
     $stmt = $pdo->prepare("UPDATE productos SET nombre = ?, cilindrada = ?, color = ?, precio = ?, stock = ?, categoria_id = ?, imagen = ? WHERE id = ?");
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen, $id]);
     
@@ -63,6 +67,7 @@ if (!$producto) {
         <div class="form-container">
             <h2>Editar Moto</h2>
             <form method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nombre de la Moto:</label>
@@ -114,6 +119,6 @@ if (!$producto) {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>
