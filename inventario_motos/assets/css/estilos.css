@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+:root {
+    /* Color Palette - Orange & Dark Gray Theme (Automotive/Racing) */
+    --primary-color: #ff6b35;
+    /* Vibrant Orange */
+    --primary-hover: #e85a28;
+    /* Darker Orange */
+    --accent-color: #ff9f1c;
+    /* Bright Orange */
+    --accent-hover: #e68a0f;
+    /* Darker Bright Orange */
+    --danger-color: #e63946;
+    /* Red */
+    --success-color: #06d6a0;
+    /* Teal Green */
+
+    /* Backgrounds & Surfaces */
+    --bg-body: #e8e8e8;
+    /* Light Gray */
+    --bg-surface: #ffffff;
+    --bg-header: #2d3142;
+    /* Dark Gray - Professional */
+    --bg-card: #f5f5f5;
+
+    /* Typography */
+    --text-main: #1a1a1a;
+    /* Almost Black */
+    --text-secondary: #4a4a4a;
+    /* Medium Gray */
+    --text-light: #7a7a7a;
+    /* Light Gray */
+    --text-white: #ffffff;
+
+    /* Spacing & Borders */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-pill: 50px;
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.2);
+    --shadow-bold: 0 8px 16px rgba(255, 107, 53, 0.3);
+}
+
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--primary-hover);
+}
+
+/* Layout Utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Components: Buttons - Pill Style with Bold Shadows */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    box-shadow: var(--shadow-bold);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+    color: var(--text-white);
+}
+
+.btn-warning {
+    background-color: var(--accent-color);
+    color: var(--text-main);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-warning:hover {
+    background-color: var(--accent-hover);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger:hover {
+    background-color: #d62828;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success:hover {
+    background-color: #05b88a;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Components: Cards - Darker Borders & Pronounced Shadows */
+.card,
+.card-container,
+.form-container {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 35px;
+    margin-bottom: 25px;
+    border: 2px solid #d0d0d0;
+}
+
+.card-container,
+.form-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+/* Header / Navbar - Left-aligned Navigation */
+.admin-header {
+    background-color: var(--bg-header);
+    color: var(--text-white);
+    padding: 18px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.admin-header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--text-white);
+    letter-spacing: 1px;
+    font-weight: 900;
+}
+
+.admin-header nav {
+    display: flex;
+    gap: 15px;
+}
+
+.admin-header nav a {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    transition: all 0.3s;
+}
+
+.admin-header nav a:hover {
+    color: var(--text-white);
+    background-color: var(--primary-color);
+}
+
+/* Hero Section - Right-aligned Buttons */
+.hero {
+    background: linear-gradient(135deg, #2d3142, #1a1d2e);
+    color: var(--text-white);
+    padding: 100px 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, var(--primary-color) 0%, transparent 70%);
+    opacity: 0.15;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--text-white);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    font-weight: 900;
+    position: relative;
+}
+
+.hero p {
+    font-size: 1.4rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 0 40px 0;
+    position: relative;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.hero-buttons .btn {
+    padding: 16px 40px;
+    font-size: 1.15rem;
+}
+
+.hero-buttons .btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.hero-buttons .btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Login Form */
+.login-container {
+    max-width: 450px;
+    margin: 100px auto;
+    background: var(--bg-surface);
+    padding: 45px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    border: 2px solid #d0d0d0;
+}
+
+.login-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 35px;
+    font-weight: 900;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 2px solid #d0d0d0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.login-container input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.login-container button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-bold);
+}
+
+/* Forms (General) - Single Column Layout */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="password"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #d0d0d0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+    outline: none;
+}
+
+.form-group input[type="file"] {
+    padding: 10px 0;
+}
+
+.form-actions {
+    margin-top: 35px;
+    text-align: right;
+    padding-top: 25px;
+    border-top: 2px solid #e0e0e0;
+}
+
+/* Tables - Horizontal Scroll */
+.scrollable-table {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-surface);
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: var(--bg-header);
+    color: var(--text-white);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+    padding: 18px;
+    text-align: left;
+}
+
+td {
+    padding: 18px;
+    border-bottom: 1px solid #e0e0e0;
+    color: var(--text-secondary);
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Dashboard Cards - Vertical Stack */
+.dashboard-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.dashboard-cards .card {
+    text-align: left;
+    padding: 30px;
+    border-left: 6px solid var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-cards .card h3 {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.dashboard-cards .card p {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* Product Grid (Public) - Horizontal Card Option */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 35px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #e0e0e0;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.product-image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.product-info {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.product-category {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.product-price {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--text-main);
+    margin-top: auto;
+}
+
+.no-products {
+    text-align: center;
+    padding: 60px;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    margin: 20px;
+}
