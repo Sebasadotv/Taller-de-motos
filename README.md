@@ -42,8 +42,8 @@ Sistema de gestión de inventario de motocicletas desarrollado en PHP con MySQL.
    - Inicia Apache y MySQL desde el panel de control de XAMPP
 
 4. **Acceder al sistema**
-   - Página principal: `http://localhost/inventario_motos/`
-   - Panel de administración: `http://localhost/inventario_motos/auth/login.php`
+   - Página principal: `http://localhost/taller-de-motos/`
+   - Panel de administración: `http://localhost/taller-de-motos/auth/login.php`
 
 ## Credenciales de Acceso
 
@@ -53,7 +53,7 @@ Sistema de gestión de inventario de motocicletas desarrollado en PHP con MySQL.
 ## Estructura del Proyecto
 
 ```
-inventario_motos/
+taller-de-motos/
 ├── admin/
 │   ├── categorias/
 │   │   ├── listar.php
