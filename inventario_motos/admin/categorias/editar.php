@@ -16,7 +16,7 @@ if (!$id) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verify CSRF token
+    // Verify CSRF token.
     verify_csrf_or_redirect('listar.php');
     
     $nombre = post_input('nombre');

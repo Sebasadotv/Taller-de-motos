@@ -44,10 +44,16 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div style="margin-bottom: 30px; text-align: center;">
             <h3>Filtrar por Categoría:</h3>
             <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">
-                <a href="productos.php" class="btn <?php echo (!$categoria_id) ? 'btn-primary' : 'btn-warning'; ?>">Todas</a>
+                <?php
+                $btn_todas = ($categoria_id === null) ? 'btn-primary' : 'btn-warning';
+                ?>
+                <a href="productos.php" class="btn <?php echo $btn_todas; ?>">Todas</a>
                 <?php foreach ($categorias as $cat) : ?>
+                    <?php
+                    $btn_cat = ($categoria_id === $cat['id']) ? 'btn-primary' : 'btn-warning';
+                    ?>
                     <a href="productos.php?categoria=<?php echo $cat['id']; ?>" 
-                       class="btn <?php echo ($categoria_id == $cat['id']) ? 'btn-primary' : 'btn-warning'; ?>">
+                       class="btn <?php echo $btn_cat; ?>">
                         <?php echo htmlspecialchars($cat['nombre']); ?>
                     </a>
                 <?php endforeach; ?>
@@ -58,7 +64,10 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="product-grid">
                 <?php foreach ($productos as $producto) : ?>
                     <div class="product-card">
-                        <img src="<?php echo ($producto['imagen']) ?: 'assets/img/productos/default-moto.jpg'; ?>" 
+                        <?php
+                        $img_src = ($producto['imagen'] !== null && $producto['imagen'] !== '') ? $producto['imagen'] : 'assets/img/productos/default-moto.jpg';
+                        ?>
+                        <img src="<?php echo $img_src; ?>" 
                              alt="<?php echo htmlspecialchars($producto['nombre']); ?>" 
                              class="product-image"
                              onerror="this.src='https://via.placeholder.com/400x280/2d3142/ff6b35?text=Moto'">

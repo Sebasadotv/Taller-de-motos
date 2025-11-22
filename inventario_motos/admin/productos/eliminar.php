@@ -10,7 +10,7 @@ require_once '../../includes/security.php';
 
 $id = validate_id(get_input('id'));
 
-// Verify CSRF token
+// Verify CSRF token.
 verify_csrf_or_redirect('listar.php');
 
 if ($id) {

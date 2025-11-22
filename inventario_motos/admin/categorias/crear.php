@@ -9,7 +9,7 @@ require_once '../../config/db.php';
 require_once '../../includes/security.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verify CSRF token
+    // Verify CSRF token.
     verify_csrf_or_redirect('crear.php');
     
     $nombre = post_input('nombre');

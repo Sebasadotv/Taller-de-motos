@@ -4,24 +4,23 @@
  * Provides input validation, sanitization, and CSRF protection
  */
 
-// Start session if not already started
+// Start session if not already started.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 /**
  * Safely get and sanitize GET parameter
- * @param string $key The parameter key
- * @param int $filter The filter to apply (default: FILTER_SANITIZE_SPECIAL_CHARS)
- * @param mixed $default Default value if parameter doesn't exist
+ * @param string    $key     The parameter key
+ * @param int        $filter  The filter to apply (default: FILTER_SANITIZE_SPECIAL_CHARS)
+ * @param mixed      $default Default value if parameter doesn't exist
  * @return mixed Sanitized value or default
  */
 function get_input($key, $filter = FILTER_SANITIZE_SPECIAL_CHARS, $default = null)
 {
-    if (!isset($_GET[$key])) {
+    if (isset($_GET[$key]) === false) {
         return $default;
     }
-    
     return filter_var($_GET[$key], $filter);
 }
 
@@ -34,7 +33,7 @@ function get_input($key, $filter = FILTER_SANITIZE_SPECIAL_CHARS, $default = nul
  */
 function post_input($key, $filter = FILTER_SANITIZE_SPECIAL_CHARS, $default = null)
 {
-    if (!isset($_POST[$key])) {
+    if (isset($_POST[$key]) === false) {
         return $default;
     }
     
@@ -67,7 +66,7 @@ function validate_id($id)
  */
 function generate_csrf_token()
 {
-    if (!isset($_SESSION['csrf_token'])) {
+    if (isset($_SESSION['csrf_token']) === false) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
     
@@ -81,7 +80,7 @@ function generate_csrf_token()
  */
 function verify_csrf_token($token)
 {
-    if (!isset($_SESSION['csrf_token'])) {
+    if (isset($_SESSION['csrf_token']) === false) {
         return false;
     }
     
@@ -94,19 +93,20 @@ function verify_csrf_token($token)
  */
 function get_csrf_token()
 {
-    return post_input('csrf_token', FILTER_SANITIZE_SPECIAL_CHARS) 
+    return post_input('csrf_token', FILTER_SANITIZE_SPECIAL_CHARS)
         ?? get_input('csrf_token', FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
 /**
  * Verify CSRF token from request and redirect on failure
  * @param string $redirect_url Where to redirect on failure
+ * @return void
  */
-function verify_csrf_or_redirect($redirect_url = 'index.php')
+function verify_csrf_or_redirect($redirect_url='index.php')
 {
     $token = get_csrf_token();
     
-    if (!verify_csrf_token($token)) {
+    if (verify_csrf_token($token) === false) {
         header("Location: $redirect_url");
         exit();
     }
