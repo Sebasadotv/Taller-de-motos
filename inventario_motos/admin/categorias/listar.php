@@ -6,6 +6,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../../config/db.php';
+require_once '../../includes/security.php';
 
 $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -50,7 +51,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo htmlspecialchars($categoria['nombre']); ?></td>
                                 <td>
                                     <a href="editar.php?id=<?php echo $categoria['id']; ?>" class="btn btn-warning">Editar</a>
-                                    <a href="eliminar.php?id=<?php echo $categoria['id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</a>
+                                    <a href="eliminar.php?id=<?php echo $categoria['id']; ?>&<?php echo csrf_param(); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

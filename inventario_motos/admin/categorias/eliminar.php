@@ -6,8 +6,12 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../../config/db.php';
+require_once '../../includes/security.php';
 
-$id = ($_GET['id'] ?? null);
+$id = validate_id(get_input('id'));
+
+// Verify CSRF token
+verify_csrf_or_redirect('listar.php');
 
 if ($id) {
     $stmt = $pdo->prepare("DELETE FROM categorias WHERE id = ?");

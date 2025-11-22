@@ -1,12 +1,13 @@
 <?php
 require_once 'config/db.php';
+require_once 'includes/security.php';
 
 // Obtener todas las categorías para el filtro.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 
 // Filtrar por categoría si se selecciona.
-$categoria_id = ($_GET['categoria'] ?? null);
+$categoria_id = validate_id(get_input('categoria'));
 
 if ($categoria_id) {
     $stmt = $pdo->prepare(

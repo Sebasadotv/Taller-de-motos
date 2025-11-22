@@ -6,6 +6,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../../config/db.php';
+require_once '../../includes/security.php';
 
 $stmt = $pdo->query(
     "SELECT p.*, c.nombre as categoria_nombre FROM productos p INNER JOIN categorias c ON p.categoria_id = c.id ORDER BY p.nombre"
@@ -62,7 +63,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo htmlspecialchars($producto['categoria_nombre']); ?></td>
                                 <td>
                                     <a href="editar.php?id=<?php echo $producto['id']; ?>" class="btn btn-warning">Editar</a>
-                                    <a href="eliminar.php?id=<?php echo $producto['id']; ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta moto?')">Eliminar</a>
+                                    <a href="eliminar.php?id=<?php echo $producto['id']; ?>&<?php echo csrf_param(); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta moto?')">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

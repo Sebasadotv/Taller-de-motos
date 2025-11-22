@@ -6,9 +6,13 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once '../../config/db.php';
+require_once '../../includes/security.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
+    // Verify CSRF token
+    verify_csrf_or_redirect('crear.php');
+    
+    $nombre = post_input('nombre');
     $stmt = $pdo->prepare("INSERT INTO categorias (nombre) VALUES (?)");
     $stmt->execute([$nombre]);
     
@@ -37,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-container">
             <h2>Nueva Categoría</h2>
             <form method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Nombre de la Categoría:</label>
