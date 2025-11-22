@@ -1,12 +1,11 @@
 <?php
-session_start();
+require_once '../../includes/security.php';
+require_once '../../config/db.php';
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
-
-require_once '../../config/db.php';
-require_once '../../includes/security.php';
 
 $stmt = $pdo->query(
     "SELECT p.*, c.nombre as categoria_nombre FROM productos p INNER JOIN categorias c ON p.categoria_id = c.id ORDER BY p.nombre"
@@ -54,16 +53,16 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tbody>
                         <?php foreach ($productos as $producto) : ?>
                             <tr>
-                                <td><?php echo $producto['id']; ?></td>
+                                <td><?php echo htmlspecialchars($producto['id']); ?></td>
                                 <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
                                 <td><?php echo htmlspecialchars($producto['cilindrada']); ?></td>
                                 <td><?php echo htmlspecialchars($producto['color']); ?></td>
                                 <td>$<?php echo number_format($producto['precio'], 0, ',', '.'); ?></td>
-                                <td><?php echo $producto['stock']; ?></td>
+                                <td><?php echo htmlspecialchars($producto['stock']); ?></td>
                                 <td><?php echo htmlspecialchars($producto['categoria_nombre']); ?></td>
                                 <td>
-                                    <a href="editar.php?id=<?php echo $producto['id']; ?>" class="btn btn-warning">Editar</a>
-                                    <a href="eliminar.php?id=<?php echo $producto['id']; ?>&<?php echo csrf_param(); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta moto?')">Eliminar</a>
+                                    <a href="editar.php?id=<?php echo htmlspecialchars($producto['id']); ?>" class="btn btn-warning">Editar</a>
+                                    <a href="eliminar.php?id=<?php echo htmlspecialchars($producto['id']); ?>&<?php echo csrf_param(); ?>" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta moto?')">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

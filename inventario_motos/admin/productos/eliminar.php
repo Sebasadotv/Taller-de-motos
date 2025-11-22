@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../../includes/security.php';
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();

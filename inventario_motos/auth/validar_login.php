@@ -1,7 +1,10 @@
 <?php
-session_start();
-$usuario = ($_POST['usuario'] ?? '');
-$password = ($_POST['password'] ?? '');
+require_once '../includes/security.php';
+
+verify_csrf_or_redirect('login.php');
+
+$usuario = post_input('usuario');
+$password = post_input('password', FILTER_DEFAULT);
 
 if ($usuario === 'admin' && $password === 'admin') {
     $_SESSION['usuario'] = $usuario;

@@ -67,7 +67,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php
                         $img_src = ($producto['imagen'] !== null && $producto['imagen'] !== '') ? $producto['imagen'] : 'assets/img/productos/default-moto.jpg';
                         ?>
-                        <img src="<?php echo $img_src; ?>" 
+                        <img src="<?php echo htmlspecialchars($img_src); ?>" 
                              alt="<?php echo htmlspecialchars($producto['nombre']); ?>" 
                              class="product-image"
                              onerror="this.src='https://via.placeholder.com/400x280/2d3142/ff6b35?text=Moto'">
@@ -77,7 +77,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <p style="color: var(--text-secondary); margin: 10px 0;">
                                 <strong>Cilindrada:</strong> <?php echo htmlspecialchars($producto['cilindrada']); ?><br>
                                 <strong>Color:</strong> <?php echo htmlspecialchars($producto['color']); ?><br>
-                                <strong>Stock:</strong> <?php echo $producto['stock']; ?> unidades
+                                <strong>Stock:</strong> <?php echo htmlspecialchars($producto['stock']); ?> unidades
                             </p>
                             <div class="product-price">$<?php echo number_format($producto['precio'], 0, ',', '.'); ?></div>
                         </div>

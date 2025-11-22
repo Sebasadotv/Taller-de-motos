@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once '../includes/security.php';
+require_once '../config/db.php';
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../auth/login.php');
     exit();
 }
-
-require_once '../config/db.php';
 
 // Obtener estadísticas.
 $stmt_prod = $pdo->query("SELECT COUNT(*) FROM productos");
@@ -40,15 +40,15 @@ $productos_bajo_stock = $stmt_stock->fetchColumn();
         <div class="dashboard-cards">
             <div class="card">
                 <h3>Total de Motos</h3>
-                <p><?php echo $total_productos; ?></p>
+                <p><?php echo htmlspecialchars($total_productos); ?></p>
             </div>
             <div class="card">
                 <h3>Total de Categorías</h3>
-                <p><?php echo $total_categorias; ?></p>
+                <p><?php echo htmlspecialchars($total_categorias); ?></p>
             </div>
             <div class="card">
                 <h3>Motos con Bajo Stock</h3>
-                <p><?php echo $productos_bajo_stock; ?></p>
+                <p><?php echo htmlspecialchars($productos_bajo_stock); ?></p>
             </div>
         </div>
 
