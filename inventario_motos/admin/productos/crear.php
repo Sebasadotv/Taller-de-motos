@@ -1,12 +1,8 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
-
-require_once '../../config/db.php';
 require_once '../../includes/security.php';
+require_once '../../config/db.php';
+
+require_login('../../auth/login.php');
 
 // Obtener categorías para el select.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
@@ -29,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen]);
     
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 ?>
 <!DOCTYPE html>

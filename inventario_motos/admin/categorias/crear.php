@@ -1,23 +1,20 @@
 <?php
 require_once '../../includes/security.php';
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
-
 require_once '../../config/db.php';
-require_once '../../includes/security.php';
+
+require_login('../../auth/login.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF token.
     verify_csrf_or_redirect('crear.php');
     
     $nombre = post_input('nombre');
-    $stmt = $pdo->prepare("INSERT INTO categorias (nombre) VALUES (?)");
-    $stmt->execute([$nombre]);
     
-    header('Location: listar.php');
-    exit();
+    if ($nombre) {
+        $stmt = $pdo->prepare("INSERT INTO categorias (nombre) VALUES (?)");
+        $stmt->execute([$nombre]);
+        redirect('listar.php');
+    }
 }
 ?>
 <!DOCTYPE html>

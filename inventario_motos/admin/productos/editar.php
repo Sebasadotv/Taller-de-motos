@@ -1,18 +1,13 @@
 <?php
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
-
-require_once '../../config/db.php';
 require_once '../../includes/security.php';
+require_once '../../config/db.php';
+
+require_login('../../auth/login.php');
 
 $id = validate_id(get_input('id'));
 
 if (!$id) {
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 
 // Obtener categorías para el select.
@@ -33,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("UPDATE productos SET nombre = ?, cilindrada = ?, color = ?, precio = ?, stock = ?, categoria_id = ?, imagen = ? WHERE id = ?");
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen, $id]);
     
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 
 $stmt = $pdo->prepare("SELECT * FROM productos WHERE id = ?");
@@ -42,8 +36,7 @@ $stmt->execute([$id]);
 $producto = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$producto) {
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 ?>
 <!DOCTYPE html>
@@ -91,7 +84,7 @@ if (!$producto) {
                     
                     <div class="form-group">
                         <label>Stock:</label>
-                        <input type="number" name="stock" value="<?php echo $producto['stock']; ?>" required>
+                        <input type="number" name="stock" value="<?php echo htmlspecialchars($producto['stock']); ?>" required>
                     </div>
                     
                     <div class="form-group">

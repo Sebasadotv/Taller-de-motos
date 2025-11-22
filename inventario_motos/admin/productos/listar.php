@@ -2,10 +2,7 @@
 require_once '../../includes/security.php';
 require_once '../../config/db.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
+require_login('../../auth/login.php');
 
 $stmt = $pdo->query(
     "SELECT p.*, c.nombre as categoria_nombre FROM productos p INNER JOIN categorias c ON p.categoria_id = c.id ORDER BY p.nombre"

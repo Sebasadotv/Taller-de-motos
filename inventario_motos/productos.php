@@ -52,7 +52,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php
                     $btn_cat = ($categoria_id === $cat['id']) ? 'btn-primary' : 'btn-warning';
                     ?>
-                    <a href="productos.php?categoria=<?php echo $cat['id']; ?>" 
+                    <a href="productos.php?categoria=<?php echo htmlspecialchars($cat['id']); ?>" 
                        class="btn <?php echo $btn_cat; ?>">
                         <?php echo htmlspecialchars($cat['nombre']); ?>
                     </a>

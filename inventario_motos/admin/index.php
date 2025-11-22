@@ -2,10 +2,9 @@
 require_once '../includes/security.php';
 require_once '../config/db.php';
 
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../auth/login.php');
-    exit();
-}
+require_login('../auth/login.php');
+
+$usuario = $_SESSION['usuario'];
 
 // Obtener estadísticas.
 $stmt_prod = $pdo->query("SELECT COUNT(*) FROM productos");
@@ -35,7 +34,7 @@ $productos_bajo_stock = $stmt_stock->fetchColumn();
     </div>
 
     <div class="container">
-        <h2>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario']); ?></h2>
+        <h2>Bienvenido, <?php echo htmlspecialchars($usuario); ?></h2>
         
         <div class="dashboard-cards">
             <div class="card">

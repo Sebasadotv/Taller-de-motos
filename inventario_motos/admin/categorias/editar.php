@@ -1,18 +1,13 @@
 <?php
 require_once '../../includes/security.php';
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
-
 require_once '../../config/db.php';
-require_once '../../includes/security.php';
+
+require_login('../../auth/login.php');
 
 $id = validate_id(get_input('id'));
 
 if (!$id) {
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -20,11 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf_or_redirect('listar.php');
     
     $nombre = post_input('nombre');
-    $stmt = $pdo->prepare("UPDATE categorias SET nombre = ? WHERE id = ?");
-    $stmt->execute([$nombre, $id]);
     
-    header('Location: listar.php');
-    exit();
+    if ($nombre) {
+        $stmt = $pdo->prepare("UPDATE categorias SET nombre = ? WHERE id = ?");
+        $stmt->execute([$nombre, $id]);
+        redirect('listar.php');
+    }
 }
 
 $stmt = $pdo->prepare("SELECT * FROM categorias WHERE id = ?");
@@ -32,8 +28,7 @@ $stmt->execute([$id]);
 $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$categoria) {
-    header('Location: listar.php');
-    exit();
+    redirect('listar.php');
 }
 ?>
 <!DOCTYPE html>

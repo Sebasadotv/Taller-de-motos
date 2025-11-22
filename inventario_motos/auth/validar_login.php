@@ -8,9 +8,7 @@ $password = post_input('password', FILTER_DEFAULT);
 
 if ($usuario === 'admin' && $password === 'admin') {
     $_SESSION['usuario'] = $usuario;
-    header('Location: ../admin/index.php');
+    redirect('../admin/index.php');
 } else {
-    header('Location: login.php');
+    redirect('login.php');
 }
-
-exit();

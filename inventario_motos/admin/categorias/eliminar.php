@@ -1,12 +1,8 @@
 <?php
 require_once '../../includes/security.php';
-if (!isset($_SESSION['usuario'])) {
-    header('Location: ../../auth/login.php');
-    exit();
-}
-
 require_once '../../config/db.php';
-require_once '../../includes/security.php';
+
+require_login('../../auth/login.php');
 
 $id = validate_id(get_input('id'));
 
@@ -18,5 +14,4 @@ if ($id) {
     $stmt->execute([$id]);
 }
 
-header('Location: listar.php');
-exit();
+redirect('listar.php');

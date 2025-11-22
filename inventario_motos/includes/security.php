@@ -107,8 +107,7 @@ function verify_csrf_or_redirect($redirect_url='index.php')
     $token = get_csrf_token();
     
     if (verify_csrf_token($token) === false) {
-        header("Location: $redirect_url");
-        exit();
+        redirect($redirect_url);
     }
 }
 
@@ -130,4 +129,27 @@ function csrf_param()
 {
     $token = generate_csrf_token();
     return 'csrf_token='.urlencode($token);
+}
+
+/**
+ * Redirect to a URL and exit
+ * @param string $url The URL to redirect to
+ * @return void
+ */
+function redirect($url)
+{
+    header("Location: $url");
+    exit();
+}
+
+/**
+ * Require user to be logged in
+ * @param string $login_path Path to login page
+ * @return void
+ */
+function require_login($login_path = '../auth/login.php')
+{
+    if (isset($_SESSION['usuario']) === false) {
+        redirect($login_path);
+    }
 }
