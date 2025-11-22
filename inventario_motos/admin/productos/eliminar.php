@@ -4,9 +4,10 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
-$id = $_GET['id'] ?? null;
+$id = ($_GET['id'] ?? null);
 
 if ($id) {
     $stmt = $pdo->prepare("DELETE FROM productos WHERE id = ?");
@@ -15,4 +16,3 @@ if ($id) {
 
 header('Location: listar.php');
 exit();
-?>

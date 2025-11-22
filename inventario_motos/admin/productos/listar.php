@@ -4,11 +4,12 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
-$stmt = $pdo->query("SELECT p.*, c.nombre as categoria_nombre FROM productos p 
-                     INNER JOIN categorias c ON p.categoria_id = c.id 
-                     ORDER BY p.nombre");
+$stmt = $pdo->query(
+    "SELECT p.*, c.nombre as categoria_nombre FROM productos p INNER JOIN categorias c ON p.categoria_id = c.id ORDER BY p.nombre"
+);
 $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -50,7 +51,7 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($productos as $producto): ?>
+                        <?php foreach ($productos as $producto) : ?>
                             <tr>
                                 <td><?php echo $producto['id']; ?></td>
                                 <td><?php echo htmlspecialchars($producto['nombre']); ?></td>
@@ -70,6 +71,6 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

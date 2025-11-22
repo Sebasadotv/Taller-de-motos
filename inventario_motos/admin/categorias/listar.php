@@ -4,6 +4,7 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
 $stmt = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
@@ -43,7 +44,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($categorias as $categoria): ?>
+                        <?php foreach ($categorias as $categoria) : ?>
                             <tr>
                                 <td><?php echo $categoria['id']; ?></td>
                                 <td><?php echo htmlspecialchars($categoria['nombre']); ?></td>
@@ -58,6 +59,6 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

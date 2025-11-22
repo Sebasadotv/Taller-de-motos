@@ -4,9 +4,10 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
-$id = $_GET['id'] ?? null;
+$id = ($_GET['id'] ?? null);
 
 if (!$id) {
     header('Location: listar.php');
@@ -15,7 +16,6 @@ if (!$id) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
-    
     $stmt = $pdo->prepare("UPDATE categorias SET nombre = ? WHERE id = ?");
     $stmt->execute([$nombre, $id]);
     
@@ -66,6 +66,6 @@ if (!$categoria) {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

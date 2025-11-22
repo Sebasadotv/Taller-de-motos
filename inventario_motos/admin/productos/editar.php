@@ -4,16 +4,17 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
-$id = $_GET['id'] ?? null;
+$id = ($_GET['id'] ?? null);
 
 if (!$id) {
     header('Location: listar.php');
     exit();
 }
 
-// Obtener categorías para el select
+// Obtener categorías para el select.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 
@@ -24,8 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $categoria_id = $_POST['categoria_id'];
-    $imagen = $_POST['imagen'] ?? '';
-    
+    $imagen = ($_POST['imagen'] ?? '');
     $stmt = $pdo->prepare("UPDATE productos SET nombre = ?, cilindrada = ?, color = ?, precio = ?, stock = ?, categoria_id = ?, imagen = ? WHERE id = ?");
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen, $id]);
     
@@ -114,6 +114,6 @@ if (!$producto) {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

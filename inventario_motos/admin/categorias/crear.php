@@ -4,11 +4,11 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
-    
     $stmt = $pdo->prepare("INSERT INTO categorias (nombre) VALUES (?)");
     $stmt->execute([$nombre]);
     
@@ -50,6 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

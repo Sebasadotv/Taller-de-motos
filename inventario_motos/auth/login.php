@@ -15,6 +15,6 @@
             <button type="submit">Ingresar</button>
         </form>
     </div>
-    <?php include '../includes/footer.php'; ?>
+    <?php require '../includes/footer.php'; ?>
 </body>
 </html>

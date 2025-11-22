@@ -1,7 +1,7 @@
 <?php
 session_start();
-$usuario = $_POST['usuario'] ?? '';
-$password = $_POST['password'] ?? '';
+$usuario = ($_POST['usuario'] ?? '');
+$password = ($_POST['password'] ?? '');
 
 if ($usuario === 'admin' && $password === 'admin') {
     $_SESSION['usuario'] = $usuario;
@@ -9,5 +9,5 @@ if ($usuario === 'admin' && $password === 'admin') {
 } else {
     header('Location: login.php');
 }
+
 exit();
-?>

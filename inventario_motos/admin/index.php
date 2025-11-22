@@ -4,9 +4,10 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../auth/login.php');
     exit();
 }
+
 require_once '../config/db.php';
 
-// Obtener estadísticas
+// Obtener estadísticas.
 $stmt_prod = $pdo->query("SELECT COUNT(*) FROM productos");
 $total_productos = $stmt_prod->fetchColumn();
 
@@ -56,6 +57,6 @@ $productos_bajo_stock = $stmt_stock->fetchColumn();
             <a href="../productos.php" class="btn btn-success" style="padding: 15px 40px; font-size: 1.2em; width: 100%; max-width: 500px; text-align: center;" target="_blank">Ver Catálogo Público</a>
         </div>
     </div>
-    <?php include '../includes/footer.php'; ?>
+    <?php require '../includes/footer.php'; ?>
 </body>
 </html>

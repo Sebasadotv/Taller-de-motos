@@ -4,9 +4,10 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../../auth/login.php');
     exit();
 }
+
 require_once '../../config/db.php';
 
-// Obtener categorías para el select
+// Obtener categorías para el select.
 $stmt_cat = $pdo->query("SELECT * FROM categorias ORDER BY nombre");
 $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 
@@ -17,10 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     $categoria_id = $_POST['categoria_id'];
-    $imagen = $_POST['imagen'] ?? '';
-    
-    $stmt = $pdo->prepare("INSERT INTO productos (nombre, cilindrada, color, precio, stock, categoria_id, imagen) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $imagen = ($_POST['imagen'] ?? '');
+
+    $stmt = $pdo->prepare(
+        "INSERT INTO productos (nombre, cilindrada, color, precio, stock, categoria_id, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    );
     $stmt->execute([$nombre, $cilindrada, $color, $precio, $stock, $categoria_id, $imagen]);
     
     header('Location: listar.php');
@@ -78,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label>Categoría:</label>
                         <select name="categoria_id" required>
                             <option value="">Seleccione una categoría</option>
-                            <?php foreach ($categorias as $categoria): ?>
+                            <?php foreach ($categorias as $categoria) : ?>
                                 <option value="<?php echo $categoria['id']; ?>">
                                     <?php echo htmlspecialchars($categoria['nombre']); ?>
                                 </option>
@@ -99,6 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-    <?php include '../../includes/footer.php'; ?>
+    <?php require '../../includes/footer.php'; ?>
 </body>
 </html>

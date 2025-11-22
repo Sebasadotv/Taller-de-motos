@@ -3,7 +3,8 @@
 Sistema de gestión de inventario de motocicletas desarrollado en PHP con MySQL.
 
 ## Desarrollador
-**Sebastian Ibarra**
+
+### Sebastian Ibarra
 
 ## Características
 
@@ -25,6 +26,7 @@ Sistema de gestión de inventario de motocicletas desarrollado en PHP con MySQL.
 ## Instalación
 
 ### Requisitos Previos
+
 - XAMPP (o similar con PHP y MySQL)
 - Navegador web moderno
 
@@ -86,11 +88,13 @@ taller-de-motos/
 ## Funcionalidades
 
 ### Panel Público
+
 - Visualización de catálogo de motos
 - Filtrado por categorías
 - Información detallada de cada moto (cilindrada, color, precio, stock)
 
 ### Panel de Administración
+
 - **Dashboard:** Estadísticas generales del inventario
 - **Gestión de Categorías:** Crear, editar, eliminar categorías de motos
 - **Gestión de Motos:** CRUD completo de motocicletas
