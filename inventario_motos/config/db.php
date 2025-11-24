@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'inventario_motos_db';
 $username = 'root';
-$password = '';
+$password = '1234';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
