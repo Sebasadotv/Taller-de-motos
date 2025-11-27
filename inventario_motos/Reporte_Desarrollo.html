@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe de Desarrollo - Inventario de Motos</title>
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #2d3142;
+            --light: #f5f5f5;
+            --dark: #1a1a1a;
+            --text: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+
+        .conclusion {
+            background-color: #fff8f5;
+            border-left: 5px solid var(--primary);
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #888;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Informe de Desarrollo</h1>
+        <p class="meta">Proyecto: Inventario de Motos | Desarrollador: Sebastian Ibarra | Fecha: 27/11/2025</p>
+    </header>
+
+    <section>
+        <h2>1. Descripción del Desarrollo</h2>
+        <p>El proyecto <strong>Inventario de Motos</strong> es un sistema web de gestión desarrollado en PHP 8 y MySQL.
+            Su objetivo principal es administrar el inventario de un taller o concesionario de motocicletas.</p>
+        <p><strong>Características Principales:</strong></p>
+        <ul>
+            <li><strong>Gestión de Inventario (CRUD):</strong> Funcionalidad completa para Crear, Leer, Actualizar y
+                Eliminar registros de motocicletas y categorías.</li>
+            <li><strong>Panel de Administración:</strong> Dashboard con estadísticas en tiempo real sobre el stock y
+                valor del inventario.</li>
+            <li><strong>Seguridad:</strong> Sistema de autenticación robusto y protección contra vulnerabilidades web
+                comunes.</li>
+            <li><strong>Diseño:</strong> Interfaz moderna y responsiva con una paleta de colores personalizada
+                (Naranja/Gris Oscuro).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>2. Resultados del Análisis de Calidad</h2>
+        <p>Se realizó una auditoría de seguridad y calidad del código, identificando áreas críticas que requerían
+            intervención para garantizar la integridad y seguridad de la aplicación.</p>
+        <p><strong>Hallazgos Principales:</strong></p>
+        <ul>
+            <li><strong>Vulnerabilidad a SQL Injection:</strong> El código original concatenaba variables directamente
+                en las consultas SQL.</li>
+            <li><strong>Riesgo de XSS (Cross-Site Scripting):</strong> Los datos de entrada no se sanitizaban
+                adecuadamente antes de mostrarse.</li>
+            <li><strong>Falta de Protección CSRF:</strong> Los formularios no contaban con tokens de verificación,
+                permitiendo ataques de falsificación de solicitudes.</li>
+            <li><strong>Gestión de Sesiones:</strong> La verificación de sesión estaba dispersa y era inconsistente en
+                varios archivos.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Tabla Comparativa de Errores Corregidos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Vulnerabilidad / Error</th>
+                    <th>Estado Anterior</th>
+                    <th>Estado Actual (Corregido)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>SQL Injection</strong></td>
+                    <td>Consultas directas vulnerables (ej. <code>"SELECT * FROM t WHERE id = $id"</code>)</td>
+                    <td>Uso de <strong>Prepared Statements</strong> con PDO y validación estricta de IDs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Cross-Site Scripting (XSS)</strong></td>
+                    <td>Impresión directa de variables (ej. <code>echo $_POST['nombre']</code>)</td>
+                    <td>Sanitización de entradas y escape de salidas mediante funciones <code>htmlspecialchars</code>
+                        centralizadas.</td>
+                </tr>
+                <tr>
+                    <td><strong>CSRF</strong></td>
+                    <td>Formularios sin protección</td>
+                    <td>Implementación de <strong>Tokens Anti-CSRF</strong> en todos los formularios de escritura
+                        (POST).</td>
+                </tr>
+                <tr>
+                    <td><strong>Seguridad de Sesión</strong></td>
+                    <td>Checks manuales repetitivos</td>
+                    <td>Función centralizada <code>require_login()</code> y regeneración de IDs de sesión.</td>
+                </tr>
+                <tr>
+                    <td><strong>Mantenibilidad</strong></td>
+                    <td>Código de seguridad duplicado en cada archivo</td>
+                    <td>Creación de <code>includes/security.php</code> para centralizar toda la lógica de seguridad.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>4. Conclusiones Personales</h2>
+        <div class="conclusion">
+            <p>El proceso de refactorización y aseguramiento del proyecto "Inventario de Motos" ha transformado una
+                aplicación funcional pero vulnerable en un sistema robusto y seguro.</p>
+            <p>La implementación de una capa de seguridad centralizada (<code>security.php</code>) no solo corrige las
+                vulnerabilidades críticas actuales, sino que establece un estándar para el desarrollo futuro,
+                facilitando el mantenimiento y reduciendo la deuda técnica. La adopción de buenas prácticas como el uso
+                de PDO y tokens CSRF asegura que el sistema cumpla con los estándares modernos de desarrollo web.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Documento generado automáticamente por el Asistente de Desarrollo.</p>
+    </footer>
+
+    <script>
+        // Opción para imprimir automáticamente al abrir si se desea
+        // window.print();
+    </script>
+</body>
+
+</html>
