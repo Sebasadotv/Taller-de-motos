@@ -11,7 +11,6 @@ $categorias = $stmt_cat->fetchAll(PDO::FETCH_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF token.
     verify_csrf_or_redirect('crear.php');
-    
     $nombre = post_input('nombre');
     $cilindrada = post_input('cilindrada');
     $color = post_input('color');
