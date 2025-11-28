@@ -23,7 +23,6 @@ function get_input($key, $filter = FILTER_SANITIZE_SPECIAL_CHARS, $default = nul
     }
     return filter_var($_GET[$key], $filter);
 }
-
 /**
  * Safely get and sanitize POST parameter
  * @param string $key The parameter key
@@ -36,7 +35,6 @@ function post_input($key, $filter = FILTER_SANITIZE_SPECIAL_CHARS, $default = nu
     if (isset($_POST[$key]) === false) {
         return $default;
     }
-    
     return filter_var($_POST[$key], $filter);
 }
 
