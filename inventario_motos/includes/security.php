@@ -48,13 +48,12 @@ function validate_id($id)
     if ($id === null || $id === '') {
         return null;
     }
-    
     $filtered = filter_var($id, FILTER_VALIDATE_INT);
-    
+
     if ($filtered === false || $filtered < 1) {
         return null;
     }
-    
+
     return $filtered;
 }
 
@@ -67,7 +66,7 @@ function generate_csrf_token()
     if (isset($_SESSION['csrf_token']) === false) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
-    
+
     return $_SESSION['csrf_token'];
 }
 
@@ -81,7 +80,7 @@ function verify_csrf_token($token)
     if (isset($_SESSION['csrf_token']) === false) {
         return false;
     }
-    
+
     return hash_equals($_SESSION['csrf_token'], $token);
 }
 
@@ -100,10 +99,10 @@ function get_csrf_token()
  * @param string $redirect_url Where to redirect on failure
  * @return void
  */
-function verify_csrf_or_redirect($redirect_url='index.php')
+function verify_csrf_or_redirect($redirect_url = 'index.php')
 {
     $token = get_csrf_token();
-    
+
     if (verify_csrf_token($token) === false) {
         redirect($redirect_url);
     }
@@ -116,7 +115,7 @@ function verify_csrf_or_redirect($redirect_url='index.php')
 function csrf_field()
 {
     $token = generate_csrf_token();
-    return '<input type="hidden" name="csrf_token" value="'.htmlspecialchars($token).'">';
+    return '<input type="hidden" name="csrf_token" value="' . htmlspecialchars($token) . '">';
 }
 
 /**
@@ -126,7 +125,7 @@ function csrf_field()
 function csrf_param()
 {
     $token = generate_csrf_token();
-    return 'csrf_token='.urlencode($token);
+    return 'csrf_token=' . urlencode($token);
 }
 
 /**
